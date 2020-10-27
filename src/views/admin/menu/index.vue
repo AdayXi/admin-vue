@@ -57,8 +57,7 @@
                           prop="parentId">
               <el-input v-model="form.parentId"
                         :disabled="formEdit"
-                        placeholder="请输入父级节点"
-                        ></el-input>
+                        placeholder="请输入父级节点"></el-input>
             </el-form-item>
             <el-form-item label="图标"
                           prop="icon">
@@ -125,14 +124,12 @@
 </template>
 
 <script>
-import {
-  fetchTree, getObj, addObj, delObj, putObj
-} from 'api/admin/menu/index';
-import { mapGetters } from 'vuex';
+import { fetchTree, getObj, addObj, delObj, putObj } from 'api/admin/menu/index'
+import { mapGetters } from 'vuex'
 export default {
   name: 'menu',
   components: {
-    'menu-element': () => import('./components/element')
+    'menu-element': () => import('./components/element'),
   },
   data() {
     return {
@@ -145,12 +142,12 @@ export default {
       showElement: false,
       typeOptions: ['menu', 'dirt'],
       listQuery: {
-        name: undefined
+        name: undefined,
       },
       treeData: [],
       defaultProps: {
         children: 'children',
-        label: 'title'
+        label: 'title',
       },
       labelPosition: 'right',
       form: {
@@ -164,107 +161,107 @@ export default {
         path: undefined,
         enabled: undefined,
         type: undefined,
-        attr1: undefined
+        attr1: undefined,
       },
       currentId: -1,
-      menuManager_btn_add: false,
-      menuManager_btn_edit: false,
-      menuManager_btn_del: false
+      menuManager_btn_add: true,
+      menuManager_btn_edit: true,
+      menuManager_btn_del: true,
     }
   },
   watch: {
     filterText(val) {
-      this.$refs.menuTree.filter(val);
-    }
+      this.$refs.menuTree.filter(val)
+    },
   },
   created() {
-    this.getList();
-    this.menuManager_btn_add = this.elements['menuManager:btn_add'];
-    this.menuManager_btn_del = this.elements['menuManager:btn_del'];
-    this.menuManager_btn_edit = this.elements['menuManager:btn_edit'];
+    this.getList()
+    // this.menuManager_btn_add = this.elements['menuManager:btn_add'];
+    // this.menuManager_btn_del = this.elements['menuManager:btn_del'];
+    // this.menuManager_btn_edit = this.elements['menuManager:btn_edit'];
   },
   computed: {
-    ...mapGetters([
-      'elements'
-    ])
+    ...mapGetters(['elements']),
   },
   methods: {
     getList() {
-      fetchTree(this.listQuery).then(data => {
-        this.treeData = data;
-      });
+      const data = []
+      this.treeData = data
+      // fetchTree(this.listQuery).then(data => {
+      //   this.treeData = data;
+      // });
     },
     filterNode(value, data) {
-      if (!value) return true;
-      return data.label.indexOf(value) !== -1;
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
     },
     getNodeData(data) {
       if (!this.formEdit) {
-        this.formStatus = 'update';
+        this.formStatus = 'update'
       }
-      getObj(data.id).then(response => {
-        this.form = response.data;
-      });
-      this.currentId = data.id;
-      this.showElement = true;
-      this.$refs.menuElement.menuId = data.id;
-      this.$refs.menuElement.getList();
+      getObj(data.id).then((response) => {
+        this.form = response.data
+      })
+      this.currentId = data.id
+      this.showElement = true
+      this.$refs.menuElement.menuId = data.id
+      this.$refs.menuElement.getList()
     },
     handlerEdit() {
       if (this.form.id) {
-        this.formEdit = false;
-        this.formStatus = 'update';
+        this.formEdit = false
+        this.formStatus = 'update'
       }
     },
     handlerAdd() {
-      this.resetForm();
-      this.formEdit = false;
-      this.formStatus = 'create';
+      this.resetForm()
+      this.formEdit = false
+      this.formStatus = 'create'
     },
     handleDelete() {
       this.$confirm('此操作将永久删除, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       }).then(() => {
         delObj(this.currentId).then(() => {
-          this.getList();
-          this.resetForm();
-          this.onCancel();
+          this.getList()
+          this.resetForm()
+          this.onCancel()
           this.$notify({
             title: '成功',
             message: '删除成功',
             type: 'success',
-            duration: 2000
-          });
-        });
-      });
+            duration: 2000,
+          })
+        })
+      })
     },
     update() {
       putObj(this.form.id, this.form).then(() => {
-        this.getList();
+        this.getList()
         this.$notify({
           title: '成功',
           message: '更新成功',
           type: 'success',
-          duration: 2000
-        });
-      });
+          duration: 2000,
+        })
+      })
     },
     create() {
       addObj(this.form).then(() => {
-        this.getList();
+        this.getList()
         this.$notify({
           title: '成功',
           message: '创建成功',
           type: 'success',
-          duration: 2000
-        });
-      });
+          duration: 2000,
+        })
+      })
     },
     onCancel() {
-      this.formEdit = true;
-      this.formStatus = '';
+      this.formEdit = true
+      this.formStatus = ''
     },
     resetForm() {
       this.form = {
@@ -276,10 +273,10 @@ export default {
         orderNum: undefined,
         description: undefined,
         path: undefined,
-        enabled: undefined
-      };
-    }
-  }
+        enabled: undefined,
+      }
+    },
+  },
 }
 </script>
 

@@ -199,9 +199,9 @@ export default {
       },
       dialogFormVisible: false,
       dialogStatus: '',
-      menuManager_btn_element_add: false,
-      menuManager_btn_element_edit: false,
-      menuManager_btn_element_del: false,
+      menuManager_btn_element_add: true,
+      menuManager_btn_element_edit: true,
+      menuManager_btn_element_del: true,
       menuId: -1,
       textMap: {
         update: '编辑',
@@ -212,9 +212,9 @@ export default {
   },
   created() {
     this.getList();
-    this.menuManager_btn_element_add = this.elements['menuManager:btn_element_add'];
-    this.menuManager_btn_element_del = this.elements['menuManager:btn_element_del'];
-    this.menuManager_btn_element_edit = this.elements['menuManager:btn_element_edit'];
+    // this.menuManager_btn_element_add = this.elements['menuManager:btn_element_add'];
+    // this.menuManager_btn_element_del = this.elements['menuManager:btn_element_del'];
+    // this.menuManager_btn_element_edit = this.elements['menuManager:btn_element_edit'];
   },
   computed: {
     ...mapGetters([
@@ -225,11 +225,30 @@ export default {
     getList() {
       this.listLoading = true;
       this.listQuery.menuId = this.menuId;
-      page(this.listQuery).then(response => {
+      const response = {
+        data:{
+          rows:[
+            {
+              id:1,
+              code:20,
+              type:1,
+              name:'添加',
+              uri:"/1",
+              method:"get",
+              description:"添加",
+            }
+          ],
+          total:3
+        }
+      }
         this.list = response.data.rows;
         this.total = response.data.total;
         this.listLoading = false;
-      })
+      // page(this.listQuery).then(response => {
+      //   this.list = response.data.rows;
+      //   this.total = response.data.total;
+      //   this.listLoading = false;
+      // })
     },
     handleFilter() {
       this.getList();

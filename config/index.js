@@ -6,7 +6,8 @@ module.exports = {
     sitEnv: require('./sit.env'),
     prodEnv: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    // assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsRoot: path.resolve(__dirname, '../dosc'),
     assetsSubDirectory: 'static',
     assetsPublicPath: './', //请根据自己路径配置更改
     productionSourceMap: false,
