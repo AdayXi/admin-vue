@@ -14,7 +14,7 @@
     "lintfix": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.21.0",
     "codemirror": "5.26.0",
     "dropzone": "5.1.0",
     "echarts": "3.6.2",
